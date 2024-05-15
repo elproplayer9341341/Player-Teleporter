@@ -1,0 +1,137 @@
+-- Made by RobloxUIRemade
+function RobloxNotification(text, Desc, Duration)
+	local starterGui = game:GetService("StarterGui")
+
+	starterGui:SetCore("SendNotification", {
+		Title = text,
+		Text = Desc,
+		Duration = Duration
+	})
+end
+
+local TweenService = game:GetService("TweenService")
+
+local Teleport = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local DropShadowHolder = Instance.new("Frame")
+local DropShadow = Instance.new("ImageLabel")
+local plrtotp = Instance.new("TextBox")
+local TextLabel = Instance.new("TextLabel")
+local TextButton = Instance.new("TextButton")
+local UICorner = Instance.new("UICorner")
+local Close = Instance.new("TextButton")
+local UICorner_2 = Instance.new("UICorner")
+
+Teleport.Name = "Teleport"
+Teleport.Parent = game.CoreGui
+Teleport.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = Teleport
+Frame.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
+Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.222058818, 0, 0.25252524, 0)
+Frame.Size = UDim2.new(0, 207, 0, 105)
+Frame.Active = true
+Frame.Draggable = true
+
+DropShadowHolder.Name = "DropShadowHolder"
+DropShadowHolder.Parent = Frame
+DropShadowHolder.BackgroundTransparency = 1.000
+DropShadowHolder.BorderSizePixel = 0
+DropShadowHolder.Size = UDim2.new(1, 0, 1, 0)
+DropShadowHolder.ZIndex = 0
+
+DropShadow.Name = "DropShadow"
+DropShadow.Parent = DropShadowHolder
+DropShadow.AnchorPoint = Vector2.new(0.5, 0.5)
+DropShadow.BackgroundTransparency = 1.000
+DropShadow.BorderSizePixel = 0
+DropShadow.Position = UDim2.new(0.5, 0, 0.5, 0)
+DropShadow.Size = UDim2.new(1, 47, 1, 47)
+DropShadow.ZIndex = 0
+DropShadow.Image = "rbxassetid://6014261993"
+DropShadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
+DropShadow.ImageTransparency = 0.500
+DropShadow.ScaleType = Enum.ScaleType.Slice
+DropShadow.SliceCenter = Rect.new(49, 49, 450, 450)
+
+plrtotp.Name = "plrtotp"
+plrtotp.Parent = Frame
+plrtotp.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+plrtotp.BackgroundTransparency = 1.000
+plrtotp.BorderColor3 = Color3.fromRGB(255, 255, 255)
+plrtotp.BorderSizePixel = 0
+plrtotp.Position = UDim2.new(0.183574885, 0, 0.390476197, 0)
+plrtotp.Size = UDim2.new(0, 131, 0, 22)
+plrtotp.Font = Enum.Font.FredokaOne
+plrtotp.PlaceholderText = "Enter User Name"
+plrtotp.Text = ""
+plrtotp.TextColor3 = Color3.fromRGB(255, 255, 255)
+plrtotp.TextScaled = true
+plrtotp.TextSize = 14.000
+plrtotp.TextWrapped = true
+
+TextLabel.Parent = Frame
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.BorderSizePixel = 0
+TextLabel.Size = UDim2.new(0, 207, 0, 25)
+TextLabel.Font = Enum.Font.FredokaOne
+TextLabel.Text = "Teleporter v1"
+TextLabel.TextColor3 = Color3.fromRGB(255, 5, 5)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextWrapped = true
+
+TextButton.Parent = Frame
+TextButton.BackgroundColor3 = Color3.fromRGB(110, 255, 48)
+TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.BorderSizePixel = 0
+TextButton.Position = UDim2.new(0.193236709, 0, 0.685714304, 0)
+TextButton.Size = UDim2.new(0, 127, 0, 27)
+TextButton.Font = Enum.Font.FredokaOne
+TextButton.Text = "Go"
+TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.TextScaled = true
+TextButton.TextSize = 14.000
+TextButton.TextWrapped = true
+
+UICorner.Parent = TextButton
+
+Close.Name = "Close"
+Close.Parent = Frame
+Close.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+Close.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Close.BorderSizePixel = 0
+Close.Position = UDim2.new(0.893719792, 0, 0, 0)
+Close.Size = UDim2.new(0, 22, 0, 25)
+Close.Font = Enum.Font.FredokaOne
+Close.Text = "X"
+Close.TextColor3 = Color3.fromRGB(0, 0, 0)
+Close.TextScaled = true
+Close.TextSize = 14.000
+Close.TextWrapped = true
+
+UICorner_2.Parent = Close
+local Player = game.Players.LocalPlayer
+local Chr = Player.Character or Player.CharacterAdded:Wait()
+local hp = Chr:WaitForChild("HumanoidRootPart")
+
+Close.MouseButton1Click:Connect(function()
+	Teleport:Destroy()
+	RobloxNotification("Closed.", "GUI closed", 4)
+end)
+
+TextButton.MouseButton1Click:Connect(function()
+	local plr = game.Players:FindFirstChild(plrtotp.Text)
+	if plr then
+		RobloxNotification("Teleporting..", "Teleporting to "..plr.Name, 4)
+		local Tween = TweenService:Create(hp, TweenInfo.new(1), {CFrame = plr:WaitForChild("HumanoidRootPart").CFrame + Vector3.new(3,1,0)})
+		
+		Tween:Play()
+	else
+		RobloxNotification("Player", "Player not found", 4)
+	end
+end)
